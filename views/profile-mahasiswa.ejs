@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <div class="header">
+        <li><a href="#">E-Learning</a></li>
+        <div class="navbar-profile">
+            <a href="/">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="status">
+                <div class="status-img">
+                    <img src="/img/profile.png" alt="profile">
+                </div>
+                <div class="status-content">
+                    <p>Nama</p>
+                    <p>Role</p>
+                    <p>Status (Online)</p>
+                </div>
+            </div>
+            <div class="dashboard">
+                <a href="/dashboard-mahasiswa">Dashboard</a>
+            </div>
+            <div class="materi">
+                <a href="#">Materi</a>
+            </div>
+            <div class="tugas">
+                <a href="/jadwal-mahasiswa">Jadwal Kuliah</a>
+            </div>
+            <div class="nilai">
+                <a href="/nilai-mahasiswa">Nilai</a>
+            </div>
+            <div class="profile" style="background: #c2cac4;">
+                <a href="/profile-mahasiswa">Profile</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="judul">
+                <% dtd.forEach(function(data) { %>
+                <h1>Profile/<%=data.nama%></h1>
+                <% }); %>
+            </div>
+            <div class="profile-mahasiswa">
+                <div class="foto-profile">
+                    <img src="/img/profile.png" alt="profile">
+                </div>
+                <div class="data">
+                    <% dtd.forEach(function(data) { %>
+                    <form >
+                        <div class="nama">
+                            <label for="">Nama</label>
+                            <input type="text" name="nama" value="<%=data.nama %>" readonly>
+                        </div>
+                        <div class="nim">
+                            <label for="">NIM</label>
+                            <input type="text" nama="nim" value="<%=data.nim %>" readonly>
+                        </div>
+                        <div class="jenis-kelamin">
+                            <label for="">Jenis Kelamin</label>
+                            <input type="text" value="<%=data.jenis_kelamin %>" readonly>
+                        </div>
+                        <div class="alamat">
+                            <label for="">Alamat</label>
+                            <input type="text" value="<%=data.alamat %>" readonly>
+                        </div>
+                        <div class="kota">
+                            <label for="">Kota</label>
+                            <input type="text" value="<%=data.kota %>" readonly>
+                        </div>
+                        <div class="email">
+                            <label for="">Email</label>
+                            <input type="text" value="<%=data.email %>" readonly>
+                        </div>
+                        <div class="button">
+                            <a href="/profile-mahasiswa/edit/<%data.mahasiswa_id%>">Edit</a>
+                        </div>
+                    </form>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
