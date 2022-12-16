@@ -83,45 +83,70 @@ app.get('/dosen/dashboard-dosen', function(request, response) {
 });
 
 app.get('/dosen/matkul-dosen', function(request, response) {
-	// Render login template
-	response.render('dosen/matkul-dosen');
+	if (request.session.loggedin) {
+		// Render login template
+		response.render('dosen/matkul-dosen');
+	} else {
+		response.redirect('/');
+	}
+	
 });
 
 app.get('/dosen/jadwal-dosen', function(request, response) {
-    connection.query('SELECT * FROM jadwal_dosen', function(error, results) {
-        if (error) throw error; 
-        response.render('dosen/jadwal-dosen', {
-            dtd: results
-        })
-    });
+	if(request.session.loggedin){
+		connection.query('SELECT * FROM jadwal_dosen', function(error, results) {
+			if (error) throw error; 
+			response.render('dosen/jadwal-dosen', {
+				dtd: results
+			})
+		});
+	} else {
+		response.redirect('/');
+	}
+    
 });
 
 app.get('/dosen/profile-dosen', function(request, response) {
-	connection.query('SELECT nama, nip, jenis_kelamin, alamat, kota, email FROM `tb_dosen`', function(error, results, fields) {
-        if (error) throw error; 
-        response.render('dosen/profile-dosen', {
-            dtd: results
-        })
-    });
+	if(request.session.loggedin){
+		connection.query('SELECT nama, nip, jenis_kelamin, alamat, kota, email FROM `tb_dosen`', function(error, results, fields) {
+			if (error) throw error; 
+			response.render('dosen/profile-dosen', {
+				dtd: results
+			})
+		});
+	} else {
+		response.redirect('/');
+	}
+	
 }); 
 
 app.get('/dosen/profile-dosen/:id', function(request, response) {
-	connection.query('SELECT dosen_id, nama, nip, jenis_kelamin, alamat, kota, email FROM tb_dosen ', function(error, results, fields) {
-        if (error) throw error;
-		console.log(results);
-        response.render('dosen/edit-profile-dosen', {
-            dtd: results
-        })
-    });
+	if(request.session.loggedin) {
+		connection.query('SELECT dosen_id, nama, nip, jenis_kelamin, alamat, kota, email FROM tb_dosen ', function(error, results, fields) {
+			if (error) throw error;
+			console.log(results);
+			response.render('dosen/edit-profile-dosen', {
+				dtd: results
+			})
+		});
+	} else {
+		response.redirect('/');
+	}
+	
 });
 
 app.post('/dosen/profile-dosen/:id', function(request, response) {
     // let data = request.body;
-    connection.query(`UPDATE tb_dosen SET nama = '${request.body.nama}' , nip = '${request.body.nip}', jenis_kelamin = '${request.body.jenis_kelamin}', alamat = '${request.body.alamat}', kota = '${request.body.kota}', email = '${request.body.email}' WHERE tb_dosen.dosen_id = ${request.params.id}`, function(error, results, fields){
-        if (error) throw error;
-		console.log(results);
-        response.redirect('/dosen/profile-dosen')
-    })
+	if(request.session.loggedin) {
+		connection.query(`UPDATE tb_dosen SET nama = '${request.body.nama}' , nip = '${request.body.nip}', jenis_kelamin = '${request.body.jenis_kelamin}', alamat = '${request.body.alamat}', kota = '${request.body.kota}', email = '${request.body.email}' WHERE tb_dosen.dosen_id = ${request.params.id}`, function(error, results, fields){
+			if (error) throw error;
+			console.log(results);
+			response.redirect('/dosen/profile-dosen')
+		});
+	} else {
+		response.redirect('/');
+	}
+    
 })
 
 app.get('/logout',(request,response)=> {
@@ -176,58 +201,92 @@ app.get('/mahasiswa/dashboard-mahasiswa', function(request, response) {
 		// Not logged in
 		response.redirect('/mahasiswa/login-mhs');
 	}
-	response.end();
 });
 
 app.get('/mahasiswa/jadwal-mahasiswa', function(request, response) {
-    connection.query('SELECT * FROM jadwal_mahasiswa ', function(error, results) {
-        if (error) throw error; 
-        response.render('mahasiswa/jadwal-mahasiswa', {
-            dtd: results
-        })
-    });
+	if (request.session.loggedin) {
+		connection.query('SELECT * FROM jadwal_mahasiswa ', function(error, results) {
+			if (error) throw error; 
+			response.render('mahasiswa/jadwal-mahasiswa', {
+				dtd: results
+			})
+		});
+	} else {
+		response.redirect('/mahasiswa/login-mhs');
+	}
+    
 });
 
 app.get('/mahasiswa/profile-mahasiswa', function(request, response) {
-	connection.query('SELECT nama, nim, jenis_kelamin, alamat, kota, email FROM `tb_mahasiswa`', function(error, results, fields) {
-        if (error) throw error; 
-        response.render('mahasiswa/profile-mahasiswa', {
-            dtd: results
-        })
-    });
+	if (request.session.loggedin) {
+		connection.query('SELECT nama, nim, jenis_kelamin, alamat, kota, email FROM `tb_mahasiswa`', function(error, results, fields) {
+			if (error) throw error; 
+			response.render('mahasiswa/profile-mahasiswa', {
+				dtd: results
+			})
+		});
+	} else {
+		response.redirect('/mahasiswa/login-mhs');
+	}
+	
 });
 
 app.get('/mahasiswa/profile-mahasiswa/:id', function(request, response) {
-	connection.query('SELECT mahasiswa_id, nama, nim, jenis_kelamin, alamat, kota, email FROM tb_mahasiswa ', function(error, results, fields) {
-        if (error) throw error;
-		console.log(results);
-        response.render('mahasiswa/edit-profile-mahasiswa', {
-            dtd: results
-        })
-    });
+	if (request.session.loggedin) {
+		connection.query('SELECT mahasiswa_id, nama, nim, jenis_kelamin, alamat, kota, email FROM tb_mahasiswa ', function(error, results, fields) {
+			if (error) throw error;
+			console.log(results);
+			response.render('mahasiswa/edit-profile-mahasiswa', {
+				dtd: results
+			})
+		});
+	} else {
+		response.redirect('/mahasiswa/login-mhs');
+	}
+	
 });
 
 app.post('/mahasiswa/profile-mahasiswa/:id', function(request, response) {
     // let data = request.body;
-    connection.query(`UPDATE tb_mahasiswa SET nama = '${request.body.nama}' , nim = '${request.body.nim}', jenis_kelamin = '${request.body.jenis_kelamin}', alamat = '${request.body.alamat}', kota = '${request.body.kota}', email = '${request.body.email}' WHERE tb_mahasiswa.mahasiswa_id = ${request.params.id}`, function(error, results, fields){
-        if (error) throw error;
-        response.redirect('/mahasiswa/profile-mahasiswa')
-    })
+	if (request.session.loggedin) {
+		connection.query(`UPDATE tb_mahasiswa SET nama = '${request.body.nama}' , nim = '${request.body.nim}', jenis_kelamin = '${request.body.jenis_kelamin}', alamat = '${request.body.alamat}', kota = '${request.body.kota}', email = '${request.body.email}' WHERE tb_mahasiswa.mahasiswa_id = ${request.params.id}`, function(error, results, fields){
+			if (error) throw error;
+			response.redirect('/mahasiswa/profile-mahasiswa')
+		});
+	} else {
+		response.redirect('/mahasiswa/login-mhs');
+	}
+    
 })
 
 app.get('/mahasiswa/nilai-mahasiswa', function(request, response) {
-	// Render login template
-	response.render('mahasiswa/nilai-mahasiswa');
+	if (request.session.loggedin) {
+		// Render login template
+		response.render('mahasiswa/nilai-mahasiswa');
+	} else {
+		response.redirect('/mahasiswa/login-mhs');
+	}
+	
 });
 
 app.get('/mahasiswa/nilai-matkul-mahasiswa', function(request, response) {
-	// Render login template
-	response.render('mahasiswa/nilai-matkul-mahasiswa');
+	if (request.session.loggedin) {
+		// Render login template
+		response.render('mahasiswa/nilai-matkul-mahasiswa');
+	} else {
+		response.redirect('/mahasiswa/login-mhs');
+	}
+	
 });
 
 app.get('/mahasiswa/matkul-mahasiswa', function(request, response) {
-	// Render login template
-	response.render('mahasiswa/matkul-mahasiswa');
+	if (request.session.loggedin) {
+		// Render login template
+		response.render('mahasiswa/matkul-mahasiswa');
+	} else {
+		response.redirect('/mahasiswa/login-mhs');
+	}	
+	
 });
 
 
