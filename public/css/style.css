@@ -278,13 +278,19 @@
 /* matkul dosen */
 .edit {
     float: right;
-    margin-right: 25px;
-    margin-top: -25px;
+    margin-right: 75px;
+    margin-top: -45px;
+}
+
+.hapus {
+    float: right;
+    margin-right: 20px;
+    margin-top: -45px;
 }
 
 .tambah {
     float: right;
-    margin-right: 60px;
+    margin-right: 30px;
     margin-top: -25px;
 }
 

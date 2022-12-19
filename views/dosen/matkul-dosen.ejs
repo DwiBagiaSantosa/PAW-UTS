@@ -9,18 +9,20 @@
             <div class="container-materi">
                 <div class="col-mat">
                     <h3>Pertemuan 1</h3>
-                    <a href="#" class="tambah">tambah</a>
-                    <a href="#" class="edit">edit</a>
+                    <a href="/dosen/tambah-matkul-dosen/tambah" class="tambah">tambah</a>
                     <div class="border"></div>
+                    <% dtd.forEach(function(data) { %>
                     <ul>
-                        <li><a href="https://docs.google.com/presentation/d/1hDyIoDClMjDYuu0vej41KNH6hu8DIDYIiDaCZUdP9Zs/edit?usp=sharing">Materi</a></li>
-                        <li><a href="https://drive.google.com/drive/folders/1OBdnQPSTRHg5Jzi3iyGu1ToGGskcMd4h?usp=sharing">Tugas</a></li>
+                        <li><a href="<%=data.link %>"><%=data.materi_tugas %></a></li>
+                        <!-- <li><a href="<%=data.link %>">Tugas</a></li> -->
                     </ul>
+                    <a href="/dosen/matkul-dosen/delete/<%-data.id%>" class="hapus">hapus</a>
+                    <a href="/dosen/matkul-dosen/edit/<%-data.id%>" class="edit">edit</a>
+                    <% }); %>
                 </div>
                 <div class="col-mat">
                     <h3>Pertemuan 2</h3>
                     <a href="#" class="tambah">tambah</a>
-                    <a href="#" class="edit">edit</a>
                     <div class="border"></div>
                     <ul>
                         <li><a href="#">Materi</a></li>
@@ -30,7 +32,6 @@
                 <div class="col-mat">
                     <h3>Pertemuan 3</h3>
                     <a href="#" class="tambah">tambah</a>
-                    <a href="#" class="edit">edit</a>
                     <div class="border"></div>
                     <ul>
                         <li><a href="#">Materi</a></li>
@@ -40,7 +41,6 @@
                 <div class="col-mat">
                     <h3>Pertemuan 4</h3>
                     <a href="#" class="tambah">tambah</a>
-                    <a href="#" class="edit">edit</a>
                     <div class="border"></div>
                     <ul>
                         <li><a href="#">Materi</a></li>
@@ -50,7 +50,6 @@
                 <div class="col-mat">
                     <h3>Pertemuan 5</h3>
                     <a href="#" class="tambah">tambah</a>
-                    <a href="#" class="edit">edit</a>
                     <div class="border"></div>
                     <ul>
                         <li><a href="#">Materi</a></li>
@@ -60,7 +59,6 @@
                 <div class="col-mat">
                     <h3>Pertemuan 6</h3>
                     <a href="#" class="tambah">tambah</a>
-                    <a href="#" class="edit">edit</a>
                     <div class="border"></div>
                     <ul>
                         <li><a href="#">Materi</a></li>
@@ -70,7 +68,6 @@
                 <div class="col-mat">
                     <h3>Pertemuan 7</h3>
                     <a href="#" class="tambah">tambah</a>
-                    <a href="#" class="edit">edit</a>
                     <div class="border"></div>
                     <ul>
                         <li><a href="#">Materi</a></li>

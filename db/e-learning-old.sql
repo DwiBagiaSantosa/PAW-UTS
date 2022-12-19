@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2022 at 03:48 PM
+-- Generation Time: Dec 10, 2022 at 08:03 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -117,16 +117,15 @@ CREATE TABLE `tb_dosen` (
   `jenis_kelamin` varchar(25) NOT NULL,
   `alamat` varchar(25) NOT NULL,
   `kota` varchar(25) NOT NULL,
-  `email` varchar(25) NOT NULL,
-  `foto` varchar(50) NOT NULL
+  `email` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_dosen`
 --
 
-INSERT INTO `tb_dosen` (`dosen_id`, `nama`, `nip`, `jenis_kelamin`, `alamat`, `kota`, `email`, `foto`) VALUES
-(1, 'Maulana E', '199821211', 'Laki-laki', 'Margahayu', 'Jakarta', 'maulana@gmail.com', '');
+INSERT INTO `tb_dosen` (`dosen_id`, `nama`, `nip`, `jenis_kelamin`, `alamat`, `kota`, `email`) VALUES
+(1, 'Maulana H', '199821211', 'Laki-laki', 'Margahayu', 'Jakarta', 'maulana@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -141,38 +140,15 @@ CREATE TABLE `tb_mahasiswa` (
   `jenis_kelamin` varchar(25) NOT NULL,
   `alamat` varchar(25) NOT NULL,
   `kota` varchar(25) NOT NULL,
-  `email` varchar(25) NOT NULL,
-  `foto` varchar(50) NOT NULL
+  `email` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_mahasiswa`
 --
 
-INSERT INTO `tb_mahasiswa` (`mahasiswa_id`, `nama`, `nim`, `jenis_kelamin`, `alamat`, `kota`, `email`, `foto`) VALUES
-(1, 'DIaz Aria K', '1207050030', 'Laki-laki', 'Jalan Logam', 'Bandung', 'diaz@gmail.com', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_pertemuan`
---
-
-CREATE TABLE `tb_pertemuan` (
-  `id` int(11) NOT NULL,
-  `pertemuan` int(11) NOT NULL,
-  `materi_tugas` varchar(25) NOT NULL,
-  `link` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tb_pertemuan`
---
-
-INSERT INTO `tb_pertemuan` (`id`, `pertemuan`, `materi_tugas`, `link`) VALUES
-(5, 1, 'Test', 'https://docs.google.com/presentation/d/1hDyIoDClMjDYuu0vej41KNH6hu8DIDYIiDaCZUdP9Zs/edit?usp=sharing'),
-(6, 1, 'Tugassss', 'https://www.tokopedia.com/'),
-(7, 1, 'Test materi', 'https://www.tokopedia.com/');
+INSERT INTO `tb_mahasiswa` (`mahasiswa_id`, `nama`, `nim`, `jenis_kelamin`, `alamat`, `kota`, `email`) VALUES
+(1, 'DIaz Aria B', '1207050030', 'Laki-laki', 'Jalan Logam', 'Bandung', 'diaz@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -209,12 +185,6 @@ ALTER TABLE `tb_mahasiswa`
   ADD PRIMARY KEY (`mahasiswa_id`);
 
 --
--- Indexes for table `tb_pertemuan`
---
-ALTER TABLE `tb_pertemuan`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -241,12 +211,6 @@ ALTER TABLE `tb_dosen`
 --
 ALTER TABLE `tb_mahasiswa`
   MODIFY `mahasiswa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `tb_pertemuan`
---
-ALTER TABLE `tb_pertemuan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

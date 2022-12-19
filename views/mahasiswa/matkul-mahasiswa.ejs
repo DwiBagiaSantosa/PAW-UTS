@@ -9,10 +9,11 @@
                 <div class="col-mat">
                     <h3>Pertemuan 1</h3>
                     <div class="border"></div>
+                    <% dtd.forEach(function(data) { %>
                     <ul>
-                        <li><a href="https://docs.google.com/presentation/d/1hDyIoDClMjDYuu0vej41KNH6hu8DIDYIiDaCZUdP9Zs/edit?usp=sharing">Materi</a></li>
-                        <li><a href="https://drive.google.com/drive/folders/1OBdnQPSTRHg5Jzi3iyGu1ToGGskcMd4h?usp=sharing">Tugas</a></li>
+                        <li><a href="<%=data.link %>"><%=data.materi_tugas %></a></li>
                     </ul>
+                    <% }); %>
                 </div>
                 <div class="col-mat">
                     <h3>Pertemuan 2</h3>

@@ -20,16 +20,13 @@ connection.connect(function(err) {
 	  throw err
 	}
 	console.log('Connected to mysql...')
-})
+});
 
 const app = express();
 app.use(session({secret: 'secret',}));
-
 app.use(fileUpload());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 app.set('view engine', 'ejs');
 
@@ -84,8 +81,15 @@ app.get('/dosen/dashboard-dosen', function(request, response) {
 
 app.get('/dosen/matkul-dosen', function(request, response) {
 	if (request.session.loggedin) {
-		// Render login template
-		response.render('dosen/matkul-dosen');
+		connection.query('select * from `tb_pertemuan`', function(error, results, fields) {
+			if (error) throw error; 
+			console.log(results);
+			// Render login template
+			response.render('dosen/matkul-dosen', {
+				dtd: results
+			})
+		});
+		
 	} else {
 		response.redirect('/');
 	}
@@ -147,7 +151,66 @@ app.post('/dosen/profile-dosen/:id', function(request, response) {
 		response.redirect('/');
 	}
     
+});
+
+app.get('/dosen/tambah-matkul-dosen/tambah', (request, response) => {
+	if(request.session.loggedin) {
+		response.render('dosen/tambah-matkul-dosen');
+	} else {
+		response.redirect('/');
+	}
+	
+});
+
+app.post('/dosen/tambah-matkul-dosen/save', (request, response) => {
+	if(request.session.loggedin) {
+		connection.query(`INSERT into tb_pertemuan(pertemuan,materi_tugas,link) values('${request.body.pertemuan}','${request.body.materi_tugas}', '${request.body.link}')`, function(error, results, fields){
+			if (error) throw error;
+			console.log(results);
+			response.redirect('/dosen/matkul-dosen')
+		});
+	} else {
+		response.redirect('/');
+	}
+	
+});
+
+app.get('/dosen/matkul-dosen/edit/:id',(request, response) => {
+	if(request.session.loggedin){
+		connection.query(`SELECT * FROM tb_pertemuan WHERE id=${request.params.id}`, (error, results, fields) => {
+			if (error) throw error;
+			console.log(results);
+			response.render('dosen/edit-matkul-dosen', {
+				dtd: results
+			});
+		})
+	} else {
+		response.redirect('/');
+	}
 })
+
+app.post("/dosen/materi-dosen/update/:id", function(request,response){
+	if(request.session.loggedin) {
+	  connection.query(`UPDATE tb_pertemuan SET materi_tugas = '${request.body.materi_tugas}', link = '${request.body.link}' WHERE id = ${request.params.id}`, function (error, results, fields) {
+		if (error) throw error;
+		response.redirect('/dosen/matkul-dosen')
+	  });
+	} else {
+	  response.redirect("/")
+	}
+  })
+
+app.get("/dosen/matkul-dosen/delete/:id", function(request,response){
+	if(request.session.loggedin) {
+	  connection.query(`DELETE from tb_pertemuan WHERE id = ${request.params.id}`, function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		response.redirect('/dosen/matkul-dosen')
+	  });
+	} else {
+	  response.redirect("/")
+	}
+  })
 
 app.get('/logout',(request,response)=> {
 	request.session.destroy();
@@ -271,7 +334,6 @@ app.get('/mahasiswa/nilai-mahasiswa', function(request, response) {
 
 app.get('/mahasiswa/nilai-matkul-mahasiswa', function(request, response) {
 	if (request.session.loggedin) {
-		// Render login template
 		response.render('mahasiswa/nilai-matkul-mahasiswa');
 	} else {
 		response.redirect('/mahasiswa/login-mhs');
@@ -281,8 +343,13 @@ app.get('/mahasiswa/nilai-matkul-mahasiswa', function(request, response) {
 
 app.get('/mahasiswa/matkul-mahasiswa', function(request, response) {
 	if (request.session.loggedin) {
-		// Render login template
-		response.render('mahasiswa/matkul-mahasiswa');
+		connection.query('select * from `tb_pertemuan`', function(error, results, fields) {
+			if (error) throw error; 
+			console.log(results);
+			response.render('mahasiswa/matkul-mahasiswa', {
+				dtd: results
+			})
+		});
 	} else {
 		response.redirect('/mahasiswa/login-mhs');
 	}	
